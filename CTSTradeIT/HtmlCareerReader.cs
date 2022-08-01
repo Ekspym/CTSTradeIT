@@ -23,13 +23,13 @@ namespace CTSTradeIT
         {
 
             HtmlDocument doc = Careers.Load("https://www.cts-tradeit.cz/kariera/");
-            HtmlNodeCollection Nodes = doc.DocumentNode.SelectNodes("//a[@class=\"card card-lg card-link-bottom\"]"); //2x Node. 1 pro název, druhý pro url v downloadWhatToExpectSection()
-            HtmlNodeCollection NodesNamesForUrl = doc.DocumentNode.SelectNodes("//h3[@class=\"card-title mb-0\"]");
+            HtmlNodeCollection NodesNamesForUrl = doc.DocumentNode.SelectNodes("//a[@class=\"card card-lg card-link-bottom\"]"); //2x Node. 1 pro název, druhý pro url v downloadWhatToExpectSection()
+            HtmlNodeCollection Nodes = doc.DocumentNode.SelectNodes("//h3[@class=\"card-title mb-0\"]");
             for (int z = 0; Nodes.Count > z; z++)
             {
-                string jobOffer = NodesNamesForUrl[z].InnerText;
+                string jobOffer = Nodes[z].InnerText;
                 jobOffer = Regex.Replace(jobOffer, @"\s+", " ");
-                string jobOfferForUrl = Nodes[z].Attributes["href"].Value.Remove(0, 9);
+                string jobOfferForUrl = NodesNamesForUrl[z].Attributes["href"].Value.Remove(0, 9);
                 jobOfferForUrl = jobOfferForUrl.Remove(jobOfferForUrl.Length - 1, 1);
                 jobOffers.Add(jobOfferForUrl);
                 if (print == true)
